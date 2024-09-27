@@ -1,193 +1,41 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
-
-body {
-    background: url('images/bg.png') no-repeat center center fixed;
-    background-size: cover;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    flex-direction: column;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Bebas Neue', cursive; }
+body { background: url('images/bg.png') no-repeat center center fixed; background-size: cover; display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column; }
 
 /* Navbar styling */
-.navbar {
-    width: 100%;
-    background-color: #001f3f;  /* Dark blue background */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-}
+.navbar { width: 100%; background-color: #001f3f; display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; position: fixed; top: 0; left: 0; z-index: 1000; }
 
-.logo {
-    width: 120px;
-    height: auto;
-}
+/* Logo size doubled */
+.logo { width: 240px; height: auto; }  /* 2x bigger than the original size (120px) */
 
-.menu-links {
-    display: flex;
-    gap: 20px;
-}
-
-.menu-links a {
-    color: white;
-    text-decoration: none;
-    font-size: 16px;
-}
-
-.menu-links a:hover {
-    text-decoration: underline;
-}
-
-.menu-links .active {
-    font-weight: bold;
-    text-decoration: underline;
-}
+/* Menu links styling */
+.menu-links { display: flex; gap: 40px; }
+.menu-links a { color: white; text-decoration: none; font-size: 27px; font-weight: bold; }  /* 75% of original size (36px) */
+.menu-links a:hover, .menu-links .active { text-decoration: underline; }
 
 /* Top-right Connect Wallet Button */
-#connect-wallet-btn {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #0288d1;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
+#connect-wallet-btn { padding: 10px 20px; font-size: 24px; background-color: #0288d1; color: white; border: none; border-radius: 5px; cursor: pointer; transition: background 0.3s ease; }
+#connect-wallet-btn:hover { background-color: #01579b; }
 
-#connect-wallet-btn:hover {
-    background-color: #01579b;
-}
-
-.container {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    width: 80%;
-    height: 70vh;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
-    margin-top: 80px;  /* To push content below navbar */
-}
+/* Main container and content */
+.container { display: flex; justify-content: space-between; gap: 20px; width: 80%; height: 70vh; padding: 20px; border-radius: 10px; box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1); margin-top: 100px; }
 
 /* Mint Section (Left Side) */
-.mint-section {
-    flex: 1;
-    background: lightblue;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    border-radius: 10px;
-}
-
-.mint-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.mint-beast {
-    width: 150px;
-    margin-bottom: 20px;
-}
-
-.mint-text {
-    font-size: 24px;
-    margin-bottom: 10px;
-    color: black;
-}
-
-.mint-cost {
-    font-size: 18px;
-    margin-bottom: 20px;
-    color: black;
-}
-
-#mint-btn {
-    padding: 10px 20px;
-    font-size: 16px;
-    color: white;
-    background-color: #0288d1;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-#mint-btn:hover {
-    background-color: #01579b;
-}
+.mint-section { flex: 1; background: #001f3f; display: flex; justify-content: center; align-items: center; padding: 20px; border-radius: 10px; }
+.inner-container { background-color: #005f8d; padding: 20px; border-radius: 10px; text-align: center; }
+.beastpod-img { width: 150px; margin-bottom: 20px; }
+.mint-text { font-size: 30px; margin-bottom: 10px; color: white; }
+.mint-cost { font-size: 24px; margin-bottom: 20px; color: white; }
+#mint-btn { padding: 10px 20px; font-size: 18px; color: white; background-color: #0288d1; border: none; border-radius: 5px; cursor: pointer; transition: background 0.3s ease; }
+#mint-btn:hover { background-color: #01579b; }
 
 /* Inventory Section (Right Side) */
-.inventory-section {
-    flex: 2;
-    background: #001f3f;
-    color: white;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
-    position: relative;
-}
+.inventory-section { flex: 2; background: #001f3f; color: white; padding: 20px; display: flex; justify-content: center; align-items: center; border-radius: 10px; position: relative; }
 
 /* Center the wallet message and connect wallet button */
-#wallet-message {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100%;  /* Take full height */
-    width: 100%;   /* Take full width */
-}
+#wallet-message { text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; width: 100%; }
+#connect-wallet-right-btn { padding: 10px 20px; font-size: 18px; background-color: #0288d1; color: white; border: none; border-radius: 5px; cursor: pointer; transition: background 0.3s ease; margin-top: 10px; }
+#connect-wallet-right-btn:hover { background-color: #01579b; }
 
-.inventory-section h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-}
-
-#connect-wallet-right-btn {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #0288d1;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-    margin-top: 10px;
-}
-
-#connect-wallet-right-btn:hover {
-    background-color: #01579b;
-}
-
-.beast-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    max-height: 80%;
-    overflow-y: auto;
-}
-
-.beast-list img {
-    width: 100px;
-    height: 100px;
-    border: 2px solid #0288d1;
-    border-radius: 10px;
-}
+/* Beast list in inventory */
+.beast-list { display: flex; flex-wrap: wrap; gap: 15px; max-height: 80%; overflow-y: auto; }
+.beast-list img { width: 100px; height: 100px; border: 2px solid #0288d1; border-radius: 10px; }
