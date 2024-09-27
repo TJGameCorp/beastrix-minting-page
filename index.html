@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beastrix Minting Page</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Include Solana Web3.js -->
+    <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+</head>
+<body>
+    <!-- Header with Connect Wallet Button -->
+    <div class="header">
+        <button id="connect-wallet-btn">Connect Wallet</button>
+    </div>
+    
+    <div class="container">
+        <!-- Left Container for Minting -->
+        <div class="mint-section">
+            <div class="mint-box">
+                <img src="images/minted_beast1.png" alt="Minted Beast" class="mint-beast">
+                <p class="mint-text">Mint a Beast!</p>
+                <p class="mint-cost">Cost: 0.1 SOL</p>
+                <button id="mint-btn">Mint</button>
+            </div>
+        </div>
+
+        <!-- Right Container for Minted Beasts -->
+        <div class="inventory-section">
+            <h2>Beasts Owned</h2>
+            <div class="beast-list" id="beast-list">
+                <!-- Minted beasts will appear here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
