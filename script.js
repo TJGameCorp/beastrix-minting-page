@@ -1,36 +1,87 @@
-// Import Solana Web3.js dependencies via the browser global namespace provided by the bundle script
-// Make sure the <script> tag in HTML points to the latest Solana web3.js library:
-// <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
-
-// Variables to store wallet connection state
+// Solana wallet connection
 let walletConnection = null;
-let connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('devnet')); // Use devnet or testnet as needed
+let connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('devnet'));
 
 // Reference to the Connect Wallet button
 const connectWalletButton = document.getElementById('connect-wallet-btn');
+const connectWalletRightButton = document.getElementById('connect-wallet-right-btn');
+const walletMessage = document.getElementById('wallet-message');
+const beastList = document.getElementById('beast-list');
 
-// Event listener for the Connect Wallet button
-connectWalletButton.addEventListener('click', async () => {
-    // Check if the Phantom wallet is installed
-    if (window.solana && window.solana.isPhantom) {
+// Event listeners for both Connect Wallet buttons
+connectWalletButton.addEventListener('click', connectWallet);
+connectWalletRightButton.addEventListener('click', connectWallet);
+
+// Function to connect the wallet
+async function connectWallet() {
+    // Check if a Solana wallet is installed
+    if (window.solana) {
         try {
-            // Connect to Phantom wallet
-            const response = await window.solana.connect();
-            console.log('Wallet connected:', response.publicKey.toString());
-            walletConnection = response.publicKey.toString();  // Store the wallet public key
+            // Request connection to the Solana wallet
+            const response = await window.solana.connect({ onlyIfTrusted: false });
+            const publicKey = response.publicKey.toString();
+            console.log('Wallet connected:', publicKey);
+            walletConnection = publicKey;  // Store the wallet public key
 
-            // Notify the user that the wallet is connected
-            alert(`Connected to wallet: ${walletConnection}`);
+            // Update UI to show beasts after successful connection
+            walletMessage.style.display = 'none'; // Hide the "Please Connect" message
+            beastList.style.display = 'flex';    // Show the beast list container
+
+            // Update the top-right button with the wallet address
+            connectWalletButton.textContent = publicKey;  
+            connectWalletButton.removeEventListener('click', connectWallet);
+            connectWalletButton.addEventListener('click', disconnectWallet);
+
+            // Fetch NFTs from the connected wallet
+            await fetchNFTsFromWallet(publicKey);
+
         } catch (err) {
             console.error('Error connecting to wallet:', err);
         }
     } else {
-        alert('Solana wallet not found! Please install Phantom Wallet.');
+        alert('Solana wallet not found! Please install a Solana-compatible wallet like Phantom.');
     }
-});
+}
+
+// Fetch NFTs from wallet (mock for now, replace with actual API calls later)
+async function fetchNFTsFromWallet(publicKey) {
+    // Here you'd make a call to the Solana blockchain or use an NFT API like Metaplex
+    // For now, let's mock some NFTs for display
+    const nfts = [
+        { name: 'Beast 1', image: 'images/minted_beast1.png' },
+        { name: 'Beast 2', image: 'images/minted_beast2.png' },
+        { name: 'Beast 3', image: 'images/minted_beast3.png' },
+        { name: 'Beast 4', image: 'images/minted_beast4.png' },
+        { name: 'Beast 5', image: 'images/minted_beast5.png' }
+    ];
+
+    // Filter NFTs based on collection (you'd implement actual filtering here)
+    const filteredNFTs = nfts.filter(nft => nft.name.includes('Beast'));
+
+    // Clear any existing beasts
+    beastList.innerHTML = '';
+
+    // Load each beast into the beast list
+    filteredNFTs.forEach((nft, index) => {
+        const beastElement = document.createElement('img');
+        beastElement.src = nft.image;
+        beastElement.alt = nft.name;
+        beastList.appendChild(beastElement);
+    });
+}
+
+// Disconnect wallet functionality
+function disconnectWallet() {
+    walletConnection = null;
+    connectWalletButton.textContent = 'Connect Wallet';  // Revert the button text
+    connectWalletButton.removeEventListener('click', disconnectWallet);
+    connectWalletButton.addEventListener('click', connectWallet);
+    walletMessage.style.display = 'block'; // Show the "Please Connect" message
+    beastList.style.display = 'none'; // Hide the beast list
+}
 
 // Mint button event listener
-document.getElementById('mint-btn').addEventListener('click', async () => {
+document.getElementById('mint-btn').addEventListener('click', () => {
     // Check if the wallet is connected
     if (!walletConnection) {
         alert("Please connect your wallet first.");
@@ -44,69 +95,10 @@ document.getElementById('mint-btn').addEventListener('click', async () => {
 // Mint Beast function
 function mintBeast() {
     // Add a new minted beast to the inventory list
-    const beastList = document.getElementById('beast-list');
     const newBeast = document.createElement('img');
     newBeast.src = 'images/minted_beast1.png';  // Placeholder beast image
     newBeast.alt = 'Minted Beast';
     beastList.appendChild(newBeast);
 
     alert('Beast minted successfully!');
-}
-
-// Example transaction: Create and send a basic Solana transaction
-async function sendTransaction() {
-    if (!walletConnection) {
-        alert("Please connect your wallet first.");
-        return;
-    }
-
-    try {
-        // Generate a new keypair for the recipient
-        let recipientKeypair = solanaWeb3.Keypair.generate();
-
-        // Create a transaction to transfer 0.01 SOL from the connected wallet
-        let transaction = new solanaWeb3.Transaction().add(
-            solanaWeb3.SystemProgram.transfer({
-                fromPubkey: walletConnection,  // Sender's public key
-                toPubkey: recipientKeypair.publicKey,  // Recipient's public key
-                lamports: solanaWeb3.LAMPORTS_PER_SOL * 0.01,  // 0.01 SOL
-            })
-        );
-
-        // Sign the transaction using Phantom wallet
-        let { signature } = await window.solana.signAndSendTransaction(transaction);
-
-        // Confirm the transaction
-        await connection.confirmTransaction(signature);
-
-        alert('Transaction successful! Signature: ' + signature);
-    } catch (error) {
-        console.error('Transaction failed:', error);
-        alert('Transaction failed!');
-    }
-}
-
-// Solana Airdrop Example (Devnet only)
-// Airdrops SOL to the connected wallet (only works on devnet)
-async function requestAirdrop() {
-    if (!walletConnection) {
-        alert("Please connect your wallet first.");
-        return;
-    }
-
-    try {
-        // Request 1 SOL airdrop on devnet
-        let airdropSignature = await connection.requestAirdrop(
-            new solanaWeb3.PublicKey(walletConnection),
-            solanaWeb3.LAMPORTS_PER_SOL
-        );
-
-        // Confirm the transaction
-        await connection.confirmTransaction(airdropSignature);
-
-        alert('Airdrop successful! 1 SOL credited.');
-    } catch (error) {
-        console.error('Airdrop failed:', error);
-        alert('Airdrop failed!');
-    }
 }

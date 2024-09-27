@@ -6,7 +6,7 @@
 }
 
 body {
-    background: url('images/background.png') no-repeat center center fixed;
+    background: url('images/bg.png') no-repeat center center fixed;
     background-size: cover;
     display: flex;
     justify-content: center;
@@ -15,14 +15,46 @@ body {
     flex-direction: column;
 }
 
-/* Header for Connect Wallet Button */
-.header {
+/* Navbar styling */
+.navbar {
     width: 100%;
+    background-color: #001f3f;  /* Dark blue background */
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: center;
     padding: 10px 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
 }
 
+.logo {
+    width: 120px;
+    height: auto;
+}
+
+.menu-links {
+    display: flex;
+    gap: 20px;
+}
+
+.menu-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.menu-links a:hover {
+    text-decoration: underline;
+}
+
+.menu-links .active {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+/* Top-right Connect Wallet Button */
 #connect-wallet-btn {
     padding: 10px 20px;
     font-size: 16px;
@@ -47,12 +79,13 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+    margin-top: 80px;  /* To push content below navbar */
 }
 
 /* Mint Section (Left Side) */
 .mint-section {
     flex: 1;
-    background: lightblue; /* Light blue background */
+    background: lightblue;
     color: white;
     display: flex;
     justify-content: center;
@@ -106,13 +139,42 @@ body {
     color: white;
     padding: 20px;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
     border-radius: 10px;
+    position: relative;
+}
+
+/* Center the wallet message and connect wallet button */
+#wallet-message {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;  /* Take full height */
+    width: 100%;   /* Take full width */
 }
 
 .inventory-section h2 {
+    font-size: 24px;
     margin-bottom: 20px;
+}
+
+#connect-wallet-right-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #0288d1;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 10px;
+}
+
+#connect-wallet-right-btn:hover {
+    background-color: #01579b;
 }
 
 .beast-list {

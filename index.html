@@ -9,11 +9,17 @@
     <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
 </head>
 <body>
-    <!-- Header with Connect Wallet Button -->
-    <div class="header">
+    <!-- Top Menu Bar -->
+    <div class="navbar">
+        <img src="images/logo.png" alt="Logo" class="logo">
+        <div class="menu-links">
+            <a href="index.html">Home</a>
+            <a href="mint.html" class="active">Mint</a>
+            <a href="play.html">Play</a>
+        </div>
         <button id="connect-wallet-btn">Connect Wallet</button>
     </div>
-    
+
     <div class="container">
         <!-- Left Container for Minting -->
         <div class="mint-section">
@@ -25,11 +31,14 @@
             </div>
         </div>
 
-        <!-- Right Container for Minted Beasts -->
+        <!-- Right Container for Beasts -->
         <div class="inventory-section">
-            <h2>Beasts Owned</h2>
-            <div class="beast-list" id="beast-list">
-                <!-- Minted beasts will appear here -->
+            <div id="wallet-message">
+                <h2>Please Connect Your Wallet</h2>
+                <button id="connect-wallet-right-btn">Connect Wallet</button>
+            </div>
+            <div class="beast-list" id="beast-list" style="display: none;">
+                <!-- Beasts will appear here after connection -->
             </div>
         </div>
     </div>
