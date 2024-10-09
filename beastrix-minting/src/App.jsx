@@ -70,7 +70,6 @@ function App() {
           <div className="inner-container">
             <img src={beastpod} alt="Beastpod" className="beastpod-img" />
             <p className="mint-text">Mint a Beast!</p>
-            <p className="mint-cost">Cost: 0.1 SOL</p>
             <button
               onClick={handleMintBeast}
               disabled={!umi || !wallet.publicKey}
